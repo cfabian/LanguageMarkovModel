@@ -5,9 +5,6 @@ import java.util.*;
 import java.lang.IndexOutOfBoundsException;
 import java.lang.reflect.Array;
 
-
-import com.sun.istack.internal.localization.NullLocalizable;
-
 final class Matrix<T> implements Serializable
 {
     private ArrayList<T> m_matrix = null;
