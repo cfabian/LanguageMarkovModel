@@ -5,9 +5,9 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.nio.*;
 
-final static class MatrixWriter
+final class MatrixWriter
 {
-    public void writeToFile(String filename, Matrix mat)
+    public static void writeToFile(String filename, Matrix mat)
     {
         // Path file_path = Paths.get(filename);
         // ByteArrayOutputStream class_data = new ByteArrayOutputStream();
