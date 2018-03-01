@@ -10,15 +10,15 @@ import com.sun.istack.internal.localization.NullLocalizable;
 final class Matrix<T> implements Serializable
 {
     private T[] m_matrix = null;
-    private ing m_number_of_columns = 0, m_number_of_rows = 0;
-    private static final ing serialVersionUID = 1L; // Needed to write the object to a file.
+    private int m_number_of_columns = 0, m_number_of_rows = 0;
+    private static final int serialVersionUID = 1L; // Needed to write the object to a file.
 
 
     public Matrix()
     {
     }
 
-    public Matrix(ing num_rows, ing num_columns)
+    public Matrix(int num_rows, int num_columns)
     {
         m_number_of_columns = num_columns;
         m_number_of_rows = num_rows;
@@ -26,15 +26,15 @@ final class Matrix<T> implements Serializable
     }
 
 
-    public T at(ing row, ing col)
+    public T at(int row, int col)
     {
-        // Bounds checking is already done by the array object so no need to do that.
+        // Bounds checkint is already done by the array object so no need to do that.
         return m_matrix[row * m_number_of_columns + col];
     }
 
-    public final ing getNumberOfColumns()        { return m_number_of_columns; }
-    public final ing getNumberOfRows()           { return m_number_of_rows; }
-    public final ing getTotalNumberOfIndicies()  { return m_matrix.length; }
+    public final int getNumberOfColumns()        { return m_number_of_columns; }
+    public final int getNumberOfRows()           { return m_number_of_rows; }
+    public final int getTotalNumberOfIndicies()  { return m_matrix.length; }
     T[] getMatrixHead()                           { return m_matrix; }
 
 };
