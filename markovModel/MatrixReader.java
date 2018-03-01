@@ -2,7 +2,7 @@ package markovModel;
 
 import java.io.*;
 
-final static class MatrixReader
+final class MatrixReader
 {
     public static Matrix readFromFile(String filename)
     {
