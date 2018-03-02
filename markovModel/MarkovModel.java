@@ -13,8 +13,6 @@ public class MarkovModel<T> {
         String[] words = WordParser(fileName);
         makeModel(words);
         // prettyPrint(1, 0, 15, 0, 15);
-        generateText(20);
-        saveModel();
     }
     
     public String generateText(int length) {
