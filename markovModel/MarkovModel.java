@@ -14,9 +14,10 @@ public class MarkovModel<T> {
         makeModel(words);
         // prettyPrint(1, 0, 15, 0, 15);
         generateText(20);
+        saveModel();
     }
     
-    protected String generateText(int length) {
+    public String generateText(int length) {
         int min = 0;
         int max = probabilities.size() - 1;
         Random rand = new Random();
@@ -99,7 +100,42 @@ public class MarkovModel<T> {
     }
     
     protected void saveModel() {
-        
+        FileOutputStream f1 = null;
+        FileOutputStream f2 = null;
+        FileOutputStream f3 = null;
+        try {
+            f1 = new FileOutputStream("wordMap.txt");
+            f2 = new FileOutputStream("frequencies.txt");
+            f3 = new FileOutputStream("probabilities.txt");
+            
+            for(int i = 0; i < wordMap.size(); i ++) {
+                f1.write((wordMap.get(i)).getBytes());
+                if(i != wordMap.size() - 1) {
+                    f1.write((",").getBytes());
+                }
+            }
+            
+            for(int i = 0; i < frequencies.size(); i ++) {
+                for(int j = 0; j < frequencies.size(); j ++) {
+                    f2.write((frequencies.get(i).get(j)).toString().getBytes());
+                    if(j != frequencies.size() - 1) {
+                        f2.write((",").getBytes());
+                    } else {
+                        f2.write(("\n").getBytes());
+                    }
+                }
+            }
+        }catch(IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if(f1 != null) {
+                    f1.close();
+                }
+            }catch(IOException e) {
+                System.out.println("Error closing file");
+            }
+        }
     }
     
     protected void prettyPrint(int matrix, int x1, int x2, int y1, int y2) {
