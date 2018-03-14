@@ -20,13 +20,13 @@ final class Matrix<T> implements Serializable
 
     public Matrix(int num_rows, int num_columns)
     {
-        System.err.println("Number of Rows: " + Integer.toString(num_rows) + "        Number of Columns: " + Integer.toString(num_columns));
+        // System.err.println("Number of Rows: " + Integer.toString(num_rows) + "        Number of Columns: " + Integer.toString(num_columns));
         m_number_of_columns = num_columns;
         m_number_of_rows = num_rows;
-        System.err.println("Number of Rows in class: " + Integer.toString(num_rows) + "        Number of Columns: " + Integer.toString(num_columns));        
+        // System.err.println("Number of Rows in class: " + Integer.toString(num_rows) + "        Number of Columns: " + Integer.toString(num_columns));        
         m_matrix = new Vector<T>(num_columns * num_rows); // This constructor only sets the inital capacity, annoying....
         m_matrix.setSize(num_columns * num_rows); // This sets the size but only fills it with nulls.
-        System.err.println("Size of Matrix: " + Integer.toString(m_matrix.size()));
+        // System.err.println("Size of Matrix: " + Integer.toString(m_matrix.size()));
     }
 
 
