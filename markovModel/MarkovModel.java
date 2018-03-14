@@ -20,8 +20,8 @@ public class MarkovModel<T> {
     protected Matrix<Double> m_probabilities = null;
     
     protected List<String> wordMap = null;   
-    // protected Vector<Vector<Integer>> frequencies = new Vector<Vector<Integer>>();
-    // protected Vector<Vector<Double>> probabilities = new Vector<Vector<Double>>();
+    protected Vector<Vector<Integer>> frequencies = new Vector<Vector<Integer>>();
+    protected Vector<Vector<Double>> probabilities = new Vector<Vector<Double>>();
     
     public MarkovModel(String fileName) {
         String[] words = WordParser(fileName);
