@@ -33,7 +33,8 @@ public class MarkovModel<T> {
         // prettyPrint(1, 0, 15, 0, 15);
     }
     
-    protected String generateText(int number_of_words) {
+    public String generateText(int number_of_words) {
+        String text = "";
         int min = 0;
         int max = string_to_index.size() - 1;
         Random rand = new Random();
@@ -41,7 +42,8 @@ public class MarkovModel<T> {
         
         
         // Gets the first word, each has an equal probability. Essentially.
-        System.out.printf("%s", wordMap.get(word).substring(0, 1).toUpperCase() + wordMap.get(word).substring(1));
+        // System.out.printf("%s", wordMap.get(word).substring(0, 1).toUpperCase() + wordMap.get(word).substring(1));
+        text += wordMap.get(word).substring(0, 1).toUpperCase() + wordMap.get(word).substring(1);
         
         double random_number = 0.0;
         double probability_sum = 0.0;
@@ -57,7 +59,8 @@ public class MarkovModel<T> {
                 probability_sum += m_probabilities.at(previous_word_index, j);
                 if(probability_sum >= random_number)
                 {
-                    System.out.printf(" %s", wordMap.get(j));
+                    // System.out.printf(" %s", wordMap.get(j));
+                    text += " " + wordMap.get(j);
                     previous_word_index = j;
                     break;
                 }
@@ -75,9 +78,10 @@ public class MarkovModel<T> {
         //         }
         //     }
         // }
-        System.out.printf(".\n");
+        // System.out.printf(".\n");
+        text += ".";
         
-        return "";
+        return text;
     }
     
     protected String[] WordParser(String fileName) {
