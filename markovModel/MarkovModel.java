@@ -2,6 +2,7 @@ package markovModel;
 
 import java.io.*;
 import java.util.*;
+import java.lang.Long;
 
 public class MarkovModel<T> {
     
@@ -18,6 +19,8 @@ public class MarkovModel<T> {
     }
     protected HashMap<String, IndexFrequencyPair> string_to_index = new HashMap<String, IndexFrequencyPair>();
     protected Matrix<Double> m_probabilities = null;
+    // protected Matrix<Double> m_layer_2_markov_model = null;
+    
     
     protected List<String> wordMap = null;   
     protected Vector<Vector<Integer>> frequencies = new Vector<Vector<Integer>>();
@@ -162,6 +165,8 @@ public class MarkovModel<T> {
         //     }
         //     count = 0;
         // }
+
+        // m_layer_2_markov_model = squareMatrix();
     }
     
     protected void saveModel() {
@@ -203,6 +208,35 @@ public class MarkovModel<T> {
         }
     }
     
+    protected Matrix<Double> squareMatrix()
+    {
+        long startTime = System.nanoTime();
+
+        System.err.println("Squaring a matrix of dimenstions " + Integer.toString(m_probabilities.getNumberOfRows()) + "x" + Integer.toString(m_probabilities.getNumberOfColumns()));
+        Matrix<Double> rv = new Matrix<Double>(m_probabilities.getNumberOfRows(), m_probabilities.getNumberOfColumns());
+        for(int i = 0; i < m_probabilities.getNumberOfRows(); i++)
+            for(int j = 0; j < m_probabilities.getNumberOfColumns(); j++)
+                m_probabilities.set(i, j, new Double(0.0));
+
+        double sum;
+        for(int i = 0; i < rv.getNumberOfRows(); i++)
+        {
+            for(int j = 0; j < rv.getNumberOfColumns(); j++)
+            {
+                sum = 0;
+                for(int k = 0; k < rv.getNumberOfRows(); k++)
+                {
+                    sum += m_probabilities.at(i, k) * m_probabilities.at(k, j);
+                }
+                rv.set(i, j, sum);
+            }
+        }
+
+        long endTime   = System.nanoTime();
+        long totalTime = endTime - startTime;
+        System.err.println("Time took to square matrix: " + Long.toString(totalTime));
+        return rv;
+    }
     protected void prettyPrint(int matrix, int x1, int x2, int y1, int y2) {
         System.out.printf("%12s", " ");
         
