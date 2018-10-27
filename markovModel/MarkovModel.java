@@ -23,8 +23,8 @@ public class MarkovModel<T> {
     
     
     protected List<String> wordMap = null;   
-    // protected Vector<Vector<Integer>> frequencies = new Vector<Vector<Integer>>();
-    // protected Vector<Vector<Double>> probabilities = new Vector<Vector<Double>>();
+    protected Vector<Vector<Integer>> frequencies = new Vector<Vector<Integer>>();
+    protected Vector<Vector<Double>> probabilities = new Vector<Vector<Double>>();
     
     public MarkovModel(String fileName) {
         String[] words = WordParser(fileName);
@@ -34,10 +34,10 @@ public class MarkovModel<T> {
         // }
         makeModel(words);
         // prettyPrint(1, 0, 15, 0, 15);
-        generateText(20);
     }
     
-    protected String generateText(int number_of_words) {
+    public String generateText(int number_of_words) {
+        String text = "";
         int min = 0;
         int max = string_to_index.size() - 1;
         Random rand = new Random();
@@ -45,7 +45,8 @@ public class MarkovModel<T> {
         
         
         // Gets the first word, each has an equal probability. Essentially.
-        System.out.printf("%s", wordMap.get(word).substring(0, 1).toUpperCase() + wordMap.get(word).substring(1));
+        // System.out.printf("%s", wordMap.get(word).substring(0, 1).toUpperCase() + wordMap.get(word).substring(1));
+        text += wordMap.get(word).substring(0, 1).toUpperCase() + wordMap.get(word).substring(1);
         
         double random_number = 0.0;
         double probability_sum = 0.0;
@@ -61,7 +62,8 @@ public class MarkovModel<T> {
                 probability_sum += m_probabilities.at(previous_word_index, j);
                 if(probability_sum >= random_number)
                 {
-                    System.out.printf(" %s", wordMap.get(j));
+                    // System.out.printf(" %s", wordMap.get(j));
+                    text += " " + wordMap.get(j);
                     previous_word_index = j;
                     break;
                 }
@@ -79,9 +81,10 @@ public class MarkovModel<T> {
         //         }
         //     }
         // }
-        System.out.printf(".\n");
+        // System.out.printf(".\n");
+        text += ".";
         
-        return "";
+        return text;
     }
     
     protected String[] WordParser(String fileName) {
@@ -167,7 +170,42 @@ public class MarkovModel<T> {
     }
     
     protected void saveModel() {
-        
+        FileOutputStream f1 = null;
+        FileOutputStream f2 = null;
+        FileOutputStream f3 = null;
+        try {
+            f1 = new FileOutputStream("wordMap.txt");
+            f2 = new FileOutputStream("frequencies.txt");
+            f3 = new FileOutputStream("probabilities.txt");
+            
+            for(int i = 0; i < wordMap.size(); i ++) {
+                f1.write((wordMap.get(i)).getBytes());
+                if(i != wordMap.size() - 1) {
+                    f1.write((",").getBytes());
+                }
+            }
+            
+            for(int i = 0; i < frequencies.size(); i ++) {
+                for(int j = 0; j < frequencies.size(); j ++) {
+                    f2.write((frequencies.get(i).get(j)).toString().getBytes());
+                    if(j != frequencies.size() - 1) {
+                        f2.write((",").getBytes());
+                    } else {
+                        f2.write(("\n").getBytes());
+                    }
+                }
+            }
+        }catch(IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if(f1 != null) {
+                    f1.close();
+                }
+            }catch(IOException e) {
+                System.out.println("Error closing file");
+            }
+        }
     }
     
     protected Matrix<Double> squareMatrix()
